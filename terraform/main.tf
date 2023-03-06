@@ -16,10 +16,11 @@ resource "google_storage_bucket" "static_files" {
   }
 }
 
-resource "google_storage_bucket_access_control" "public_rule" {
+resource "google_storage_bucket_iam_member" "backend_bucket" {
   bucket = google_storage_bucket.static_files.name
-  role   = "READER"
-  entity = "allUsers"
+  role   = "roles/storage.objectViewer"
+  member = "allUsers"
+  depends_on = [google_storage_bucket.static_files]
 }
 
 resource "google_compute_backend_bucket" "backend_bucket" {
