@@ -1,0 +1,6 @@
+steps:
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', '*.html', 'gs://$_BUCKET_NAME']
+  
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['compute', 'url-maps', 'invalidate-cdn-cache', 'url-map', '--path=/*']
